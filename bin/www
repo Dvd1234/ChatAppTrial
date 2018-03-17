@@ -8,6 +8,9 @@ var app = require('../app');
 var debug = require('debug')('groupchat:server');
 var http = require('http');
 
+//by me
+const socketIO = require('socket.io');
+var {Users}= require('../helpers/UsersClass');
 /**
  * Get port from environment and store in Express.
  */
@@ -21,6 +24,9 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+//by me
+const io = socketIO(server);
+
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -29,8 +35,11 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+
+//by me
+require('../socket/groupchat')(io, Users);
 /**
- * Normalize a port into a number, string, or false.
+ * Normalize a port int   o a number, string, or false.
  */
 
 function normalizePort(val) {
